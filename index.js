@@ -15,7 +15,7 @@ const state = {
     {
       id: "003-apple",
       name: "apple",
-      price: 0.35,
+      price: 0.2,
       category: "fruit",
     },
     {
@@ -39,13 +39,13 @@ const state = {
     {
       id: "007-bell-pepper",
       name: "bell pepper",
-      price: 0.35,
+      price: 0.13,
       category: "vegetable",
     },
     {
       id: "008-berry",
       name: "berry",
-      price: 0.35,
+      price: 1.35,
       category: "fruit",
     },
     {
@@ -71,6 +71,17 @@ const filterByFruitBtn = document.querySelector("#filterByFruitBtn");
 const filterByVegBtn = document.querySelector("#filterByVegBtn");
 const filterByAllBtn = document.querySelector("#filterByAllBtn");
 
+const sortByAlphabetBtn = document.querySelector("#sortByAlphabetBtn");
+const sortByPriceBtn = document.querySelector("#sortByPriceBtn");
+
+sortByAlphabetBtn.addEventListener("click", function () {
+  sortByAlphabet();
+});
+
+sortByPriceBtn.addEventListener("click", function () {
+  sortByPrice();
+});
+
 filterByFruitBtn.addEventListener("click", function () {
   filterByFruit();
 });
@@ -84,7 +95,7 @@ filterByAllBtn.addEventListener("click", function () {
 });
 
 function generateItems() {
-  storeListItem.innerHTML = ''
+  storeListItem.innerHTML = "";
   state.items.forEach((item) => {
     const liElement = document.createElement("li");
     liElement.setAttribute("id", item.name);
@@ -95,6 +106,9 @@ function generateItems() {
       '.svg" alt="' +
       item.name +
       '" /></div>' +
+      "<input type='submit' style='border:none;' value=' " +
+      item.price +
+      "'>" +
       "<button>Add to cart</button>";
     liElement.querySelector("button").addEventListener("click", function () {
       addToCart(item);
@@ -218,6 +232,22 @@ function filterByVegetable() {
     });
     storeListItem.appendChild(liElement);
   });
+}
+
+function sortByPrice() {
+  Array.from(storeListItem.getElementsByTagName("li"))
+    .sort(
+      (a, b) =>
+        a.parseFloat(querySelector("input").value) <
+        b.parseFloat(querySelector("input").value)
+    )
+    .forEach((li) => storeListItem.appendChild(li));
+}
+
+function sortByAlphabet() {
+  Array.from(storeListItem.getElementsByTagName("li"))
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .forEach((li) => storeListItem.appendChild(li));
 }
 
 generateItems();
