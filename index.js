@@ -203,6 +203,9 @@ function filterByFruit() {
       '.svg" alt="' +
       item.name +
       '" /></div>' +
+      "<input type='submit' style='border:none;' value=' " +
+      item.price +
+      "'>" +
       "<button>Add to cart</button>";
     liElement.querySelector("button").addEventListener("click", function () {
       addToCart(item);
@@ -226,6 +229,9 @@ function filterByVegetable() {
       '.svg" alt="' +
       item.name +
       '" /></div>' +
+      "<input type='submit' style='border:none;' value=' " +
+      item.price +
+      "'>" +
       "<button>Add to cart</button>";
     liElement.querySelector("button").addEventListener("click", function () {
       addToCart(item);
@@ -236,10 +242,10 @@ function filterByVegetable() {
 
 function sortByPrice() {
   Array.from(storeListItem.getElementsByTagName("li"))
-    .sort(
-      (a, b) =>
-        a.parseFloat(querySelector("input").value) <
-        b.parseFloat(querySelector("input").value)
+    .sort((a, b) =>
+      a
+        .querySelector("input")
+        .value.localeCompare(b.querySelector("input").value)
     )
     .forEach((li) => storeListItem.appendChild(li));
 }
@@ -251,3 +257,4 @@ function sortByAlphabet() {
 }
 
 generateItems();
+console.log(storeListItem.querySelectorAll("input"));
