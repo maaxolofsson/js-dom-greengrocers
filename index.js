@@ -38,7 +38,7 @@ const state = {
     },
     {
       id: "007-bell-pepper",
-      name: "bell pepper",
+      name: "bell_pepper",
       price: 0.13,
       category: "vegetable",
     },
