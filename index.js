@@ -74,6 +74,8 @@ const filterByAllBtn = document.querySelector("#filterByAllBtn");
 const sortByAlphabetBtn = document.querySelector("#sortByAlphabetBtn");
 const sortByPriceBtn = document.querySelector("#sortByPriceBtn");
 
+const addProductBtn = document.querySelector("#addProductBtn");
+
 sortByAlphabetBtn.addEventListener("click", function () {
   sortByAlphabet();
 });
@@ -92,6 +94,10 @@ filterByVegBtn.addEventListener("click", function () {
 
 filterByAllBtn.addEventListener("click", function () {
   generateItems();
+});
+
+addProductBtn.addEventListener("click", function (e) {
+  addProduct(e);
 });
 
 function generateItems() {
@@ -256,5 +262,37 @@ function sortByAlphabet() {
     .forEach((li) => storeListItem.appendChild(li));
 }
 
+function addProduct(e) {
+  e.preventDefault();
+  console.log("Add product button pressed");
+
+  const formElements = document.querySelector("form").querySelectorAll("input");
+  const name = formElements[0].value;
+  const price = parseFloat(formElements[1].value);
+  const category = document
+    .querySelector("form")
+    .querySelector('input[name="category"]:checked').value;
+
+  // Checking if given product name already exists
+  let flag = false;
+  storeListItem.childNodes.forEach((el) => {
+    if (el.id.toLowerCase() === name.toLowerCase()) {
+      flag = true;
+      return;
+    }
+  });
+  if (flag) return; // Product name exists
+
+  const newId =
+    parseInt(state.items[state.items.length - 1].id.split("-")[0]) + 1;
+  const newProduct = {
+    id: newId + "-" + name,
+    name: name,
+    price: parseFloat(price),
+    category: category,
+  };
+  state.items.push(newProduct);
+  generateItems();
+}
+
 generateItems();
-console.log(storeListItem.querySelectorAll("input"));
